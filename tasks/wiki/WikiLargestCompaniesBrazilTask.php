@@ -1,5 +1,7 @@
 <?php
 
+namespace Wiki;
+
 use App\Models\BaseModel;
 use App\Models\CaptureCompany;
 use Symfony\Component\Console\Command\LockableTrait;
@@ -34,7 +36,7 @@ class WikiLargestCompaniesBrazilTask extends Command
             $this->importDataFromWiki();
             $output->writeln('<info>---- Import executed successfully.</info>');
             return 1;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $output->writeln("<error>---- {$e->getMessage()} => Linha: {$e->getLine()}</error>");
             return 0;
         }
@@ -52,7 +54,7 @@ class WikiLargestCompaniesBrazilTask extends Command
         $dataHeader = $this->getTableRows($firstTable, 'th');
 
         if (!$this->validateHeaderProfit($dataHeader)) {
-            throw new Exception('The profit column is missing the word "bilhões", check that the value has not been changed to "milhões"!');
+            throw new \Exception('The profit column is missing the word "bilhões", check that the value has not been changed to "milhões"!');
         }
 
         $rowIndex = $this->getRowsIndex($dataHeader);
@@ -74,9 +76,9 @@ class WikiLargestCompaniesBrazilTask extends Command
             Company::insertCompanyData($data);
 
             $this->db()->connection()->getPdo()->commit();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->db()->connection()->getPdo()->rollback();
-            throw new Exception("{$e->getMessage()} => Linha: {$e->getLine()}");
+            throw new \Exception("{$e->getMessage()} => Linha: {$e->getLine()}");
         }
     }
 
@@ -162,7 +164,7 @@ class WikiLargestCompaniesBrazilTask extends Command
         return null;
     }
 
-    function validateHeaderProfit(array $dataHeader): bool
+    private function validateHeaderProfit(array $dataHeader): bool
     {
         if (empty($dataHeader) || empty($dataHeader[0])) {
             return false;
