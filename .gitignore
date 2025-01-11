@@ -28,4 +28,3 @@ public/shared
 .htpasswd
 
 app/Http/Controllers/Api/CompanyController.php
-tasks/WikiLargestCompaniesBrazilTask.php
