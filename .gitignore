@@ -26,5 +26,3 @@ devops/vpn/client.conf
 devops/database/postgresql
 public/shared
 .htpasswd
-
-app/Http/Controllers/Api/CompanyController.php
