@@ -1,0 +1,50 @@
+grumphp:
+    #hooks_dir: ~
+    #hooks_preset: local
+    #git_hook_variables:
+    #    VAGRANT_HOST_DIR: .
+    #    VAGRANT_PROJECT_DIR: /var/www
+    #    EXEC_GRUMPHP_COMMAND: exec
+    #    ENV: {}
+    stop_on_failure: true
+    ignore_unstaged_changes: false
+    #hide_circumvention_tip: false
+    process_timeout: 4600
+    #ascii:
+    #    failed: grumphp-grumpy.txt
+    #    succeeded: grumphp-happy.txt
+    #parallel:
+    #    enabled: true
+    #    max_workers: 32
+    fixer:
+        enabled: false
+        fix_by_default: false
+    #environment:
+    #    files: []
+    #    variables: {}
+    #    paths: []
+    tasks:
+    #  phpcpd:
+      phpcs:
+      phpparser:
+        visitors:
+          #no_exit_statements: ~
+          #never_use_else: ~
+          forbidden_function_calls:
+            blacklist: [var_dump,exit,dd]
+        metadata:
+          priority: 100000
+    #  phpcpd:
+    #    directory: [app/]
+    #    min_lines: 4
+      phpstan:
+        autoload_file: ~
+        configuration: ~
+        level: null
+        force_patterns: []
+        ignore_patterns: []
+        triggered_by: ['php']
+        memory_limit: "-1"
+        use_grumphp_paths: true
+    #testsuites: []
+    #extensions: []

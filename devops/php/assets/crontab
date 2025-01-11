@@ -1,0 +1,2 @@
+# min  	hour  	day	month 	week   	command
+@reboot sleep 30 && echo "OK" >> /var/log/crontab.log

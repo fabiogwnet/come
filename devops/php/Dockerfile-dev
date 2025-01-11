@@ -1,0 +1,122 @@
+FROM php:8.2.1-fpm
+
+RUN apt-get update && apt-get install -y git vim libfreetype6-dev libjpeg62-turbo-dev libmcrypt-dev libicu-dev mlocate python pkg-config build-essential libmemcached-dev openvpn
+RUN apt-get install -yq \
+        libfreetype6-dev \
+        libmcrypt-dev \
+        libjpeg-dev \
+        libpng-dev \
+        libcurl4-openssl-dev \
+        libssl-dev \
+        openssl \
+        autoconf \
+        automake \
+        libtool \
+        m4 \
+        libsodium-dev \
+        libonig-dev \
+        zlib1g-dev \
+        g++
+
+RUN docker-php-ext-configure gd
+
+RUN apt-get install -y libzip-dev
+RUN docker-php-ext-install zip
+
+RUN docker-php-ext-install iconv mysqli zip pdo pdo_mysql
+RUN docker-php-ext-install mbstring bcmath sodium
+
+# Install Postgre PDO
+RUN apt-get install -y libpq-dev \
+    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
+    && docker-php-ext-install pdo_pgsql pgsql
+
+# Install MSSQL
+RUN pecl channel-update pecl.php.net
+
+RUN apt-get -y install unixodbc-dev
+RUN pecl install sqlsrv pdo_sqlsrv
+
+RUN apt-get -y install gpg
+RUN gpg --keyserver keyserver.ubuntu.com --recv-key EB3E94ADBE1229CF && gpg -a --export EB3E94ADBE1229CF | apt-key add -
+
+RUN apt-get update
+
+#Debian 11
+RUN curl https://packages.microsoft.com/config/debian/11/prod.list | tee /etc/apt/sources.list.d/mssql-release.list
+
+RUN apt-get update
+
+RUN ACCEPT_EULA=Y apt-get install -y msodbcsql18
+# optional: for bcp and sqlcmd
+RUN ACCEPT_EULA=Y apt-get install -y mssql-tools18
+RUN echo 'export PATH="$PATH:/opt/mssql-tools18/bin"' >> ~/.bashrc
+#RUN source ~/.bashrc
+# optional: for unixODBC development headers
+RUN apt-get install -y unixodbc-dev
+# optional: kerberos library for debian-slim distributions
+RUN apt-get install -y libgssapi-krb5-2
+
+RUN pecl install redis-5.3.7 \
+	&& docker-php-ext-enable redis
+
+
+RUN pecl install xdebug-3.2.1
+RUN pecl install memcached && docker-php-ext-enable memcached
+RUN pecl install mongodb && docker-php-ext-enable mongodb
+
+RUN mkdir /php-composer
+RUN mkdir /vpn
+RUN curl -sS https://getcomposer.org/installer | php
+RUN mv composer.phar /php-composer/composer
+RUN echo "export PATH=\$PATH:\$HOME/.composer/vendor/bin/:/php-composer" >> ~/.bashrc
+
+
+
+#
+# Instalacao do NodeJS
+#
+RUN apt-get update
+RUN apt-get install wget 
+
+# Add user
+RUN usermod -u 1000 www-data
+
+WORKDIR /app
+
+RUN chown -R www-data:www-data /app
+
+# Configuração do horário
+ADD ./assets/Sao_Paulo.zic /tmp
+RUN zic /tmp/Sao_Paulo.zic
+RUN rm /tmp/Sao_Paulo.zic
+RUN ln -sf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
+# ENV TZ America/Sao_Paulo
+# RUN echo $TZ | tee /etc/timezone && dpkg-reconfigure --frontend noninteractive tzdata
+
+RUN echo "PS1='\${debian_chroot:+(\$debian_chroot)}\[\033[01;32m\]\u@\$DOCKER_NAME\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '" >> /root/.bashrc
+RUN echo "alias phpunit='/app/vendor/bin/phpunit'" >> /root/.bashrc
+
+RUN apt-get -y install cron supervisor
+RUN apt-get -y install dos2unix
+RUN apt-get -y install procps
+
+#RUN apt upgrade
+RUN apt -y install ffmpeg
+
+# Supervisor Setup
+RUN mkdir -p /var/log/supervisor
+RUN mkdir -p /etc/supervisor/conf.d
+COPY assets/supervisord.conf /etc/supervisor/supervisord.conf
+
+####
+ADD assets /scripts
+RUN chmod +x /scripts/*
+
+EXPOSE 9000
+
+########
+ARG DEBIAN_FRONTEND=noninteractive
+
+ENTRYPOINT "/scripts/app.sh"
+

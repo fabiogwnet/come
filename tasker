@@ -1,0 +1,122 @@
+#!/usr/bin/env php
+<?php
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\ConsoleEvents;
+use Symfony\Component\Console\Event\ConsoleErrorEvent;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\Console\Event\ConsoleCommandEvent;
+use Symfony\Component\Console\Event\ConsoleTerminateEvent;
+
+ini_set('display_errors', 1);
+error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT);// & ~E_RECOVERABLE_ERROR
+date_default_timezone_set("America/Sao_Paulo");
+
+$app = require __DIR__.'/bootstrap/app.php';
+$app->boot();
+
+if ( ! function_exists('glob_recursive'))
+{
+  function glob_recursive($pattern, $flags = 0) {
+    if(is_file($pattern) && is_php_includable($pattern)) {
+      include_once $pattern;
+    } else {
+      $files = glob($pattern . '/*', $flags);
+      foreach ($files as $file) {
+        if (is_dir($file)) {
+          glob_recursive($file, $flags);
+        } elseif (is_php_includable($file)) {
+          include_once $file;
+        }
+      }
+    }
+  }
+}
+
+if ( ! function_exists('is_php_includable')) {
+  function is_php_includable($file) {
+    $ext = pathinfo($file, PATHINFO_EXTENSION);
+
+    return ($ext == "php" && !strpos($file, ".xml"));
+  }
+}
+
+if ( ! function_exists('is_php'))
+{
+  /**
+   * Determines if the current version of PHP is equal to or greater than the supplied value
+   *
+   * @param	string
+   * @return	bool	TRUE if the current version is $version or higher
+   */
+  function is_php($version)
+  {
+    static $_is_php;
+    $version = (string) $version;
+
+    if ( ! isset($_is_php[$version]))
+    {
+      $_is_php[$version] = version_compare(PHP_VERSION, $version, '>=');
+    }
+
+    return $_is_php[$version];
+  }
+}
+
+if ( ! function_exists('is_task_running'))
+{
+  function is_task_running($task_input) {
+    exec("ps aux | grep -v 'grep' | grep '".join(" ", $task_input->getArguments())."' | wc -l", $exec_output);
+    $is_running = ((int)trim($exec_output[0])) > 1 ? true : false;
+
+    return $is_running;
+  }
+}
+
+
+glob_recursive(__DIR__ . "/tasks");
+
+
+$application = new Application();
+
+$dispatcher = new EventDispatcher();
+$application->setDispatcher($dispatcher);
+
+$dispatcher->addListener(ConsoleEvents::COMMAND, function (ConsoleCommandEvent $event) {
+  $output = $event->getOutput();
+  $command = $event->getCommand();
+
+  $output->writeln(sprintf('<info>%s - Iniciando task: %s</info>', date('Y-m-d H:i:s'), $command->getName()));
+
+});
+
+$dispatcher->addListener(ConsoleEvents::TERMINATE, function (ConsoleTerminateEvent $event) {
+  $output = $event->getOutput();
+  $command = $event->getCommand();
+
+  if($event->getExitCode() != 2){
+    # CLI_TaskMonitor::taskMonitor($event, CLI_TaskMonitor::TASK_STATUS_IDLE);
+  }
+
+  $output->writeln(sprintf('<info>%s - Task <info>%s</info> finalizada</info>', date('Y-m-d H:i:s'), $command->getName()));
+
+  // change the exit code
+  $event->setExitCode(128);
+});
+
+$dispatcher->addListener(ConsoleEvents::ERROR, function (ConsoleErrorEvent $event) {
+  $output = $event->getOutput();
+  $output_message = $event->getError()->getMessage();
+
+  $command = $event->getCommand();
+
+  $output->writeln(sprintf('<error>Ocorreu um erro ao rodar o comando: %s</error>', $command->getName()));
+
+  # CLI_TaskMonitor::taskMonitor($event, CLI_TaskMonitor::TASK_STATUS_ERROR, $output_message);
+
+  $event->setExitCode(2);
+
+});
+
+$application->run();
+
+?>

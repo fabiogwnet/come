@@ -1,0 +1,35 @@
+
+# Created by https://www.gitignore.io/api/laravel
+# Edit at https://www.gitignore.io/?templates=laravel
+
+### Laravel ###
+npm-debug.log
+yarn-error.log
+app/storage/
+log/*
+
+# Laravel 5 & Lumen specific
+public/storage
+public/hot
+storage/*.key
+.env
+.env-docker
+Homestead.yaml
+Homestead.json
+/.vagrant
+.phpunit.result.cache
+.idea
+# End of https://www.gitignore.io/api/laravel
+
+storage/framework/sessions
+devops/vpn/client.conf
+devops/database/postgresql
+public/shared
+.htpasswd
+
+migration
+migration/*
+app/Http/Controllers/Api/CompanyController.php
+app/Models/CaptureCompany.php
+app/Models/Company.php
+tasks/WikiLargestCompaniesBrazilTask.php
