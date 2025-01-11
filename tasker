@@ -77,6 +77,7 @@ glob_recursive(__DIR__ . "/tasks");
 
 
 $application = new Application();
+$application->add(new WikiLargestCompaniesBrazilTask());
 
 $dispatcher = new EventDispatcher();
 $application->setDispatcher($dispatcher);
