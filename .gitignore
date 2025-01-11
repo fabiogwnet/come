@@ -12,7 +12,6 @@ log/*
 public/storage
 public/hot
 storage/*.key
-.env
 .env-docker
 Homestead.yaml
 Homestead.json
