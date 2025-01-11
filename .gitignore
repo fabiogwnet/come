@@ -27,8 +27,6 @@ devops/database/postgresql
 public/shared
 .htpasswd
 
-migration
-migration/*
 app/Http/Controllers/Api/CompanyController.php
 app/Models/CaptureCompany.php
 app/Models/Company.php
