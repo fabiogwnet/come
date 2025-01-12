@@ -20,7 +20,7 @@ class WikiLargestCompaniesService
         $this->httpClient = $httpClient;
     }
 
-    // Método para setar o HttpClient manualmente nos testes
+    // Método para setar o HttpClient manualmente nos testes.
     public function setHttpClient(HttpClientInterface $httpClient): void
     {
         $this->httpClient = $httpClient;

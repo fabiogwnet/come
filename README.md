@@ -253,5 +253,6 @@ Por se tratar de um teste, deixei as dependências baixadas e versionadas
     ]
     ```
 ## Prints
-2. Executando tasl no container **comexio_php**
+1. Executando task no container **comexio_php** para buscar dados na [página da Wikipédia](https://pt.wikipedia.org/wiki/Lista_das_maiores_empresas_do_Brasil) e popular as tabelas correspondentes
+
 ![Img1](storage/doc_file/1.jpeg)
