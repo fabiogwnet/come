@@ -26,6 +26,7 @@ grumphp:
     tasks:
     #  phpcpd:
       phpcs:
+      phpunit:
       phpparser:
         visitors:
           #no_exit_statements: ~

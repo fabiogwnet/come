@@ -41,7 +41,7 @@ return [
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
         ],
 
-        'testing' => [
+        /*'testing' => [
             'driver' => 'mysql',
             'host' => 'comexio_database_test',
             'database' => env('DB_DEFAULT_DATABASE'),
@@ -58,6 +58,18 @@ return [
             'modes' => [
                 'NO_ENGINE_SUBSTITUTION',
             ]
+        ],*/
+
+        'testing' => [
+            'driver'   => 'pgsql',
+            'host'     => env('DB_DEFAULT_HOSTNAME') ? env('DB_DEFAULT_HOSTNAME') : 'comexio_postgres',
+            'port'     => env('DB_DEFAULT_PORT') ? env('DB_DEFAULT_PORT') : '5432',
+            'database' => 'api',
+            'username' => env('DB_DEFAULT_USERNAME'),
+            'password' => env('DB_DEFAULT_PASSWORD', ''),
+            'charset'  => 'utf8',
+            'prefix'   => '',
+            'schema'   => 'test'
         ],
 
         'api' => [

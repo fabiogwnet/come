@@ -7,12 +7,24 @@ namespace App\Services;
 use App\Models\CaptureCompany;
 use App\Models\Company;
 use App\Helpers\Helpers;
-use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\DomCrawler\Crawler;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class WikiLargestCompaniesService
 {
+    protected HttpClientInterface $httpClient;
     protected string $url = 'https://pt.wikipedia.org/wiki/Lista_das_maiores_empresas_do_Brasil';
+
+    public function __construct(HttpClientInterface $httpClient)
+    {
+        $this->httpClient = $httpClient;
+    }
+
+    // Método para setar o HttpClient manualmente nos testes
+    public function setHttpClient(HttpClientInterface $httpClient): void
+    {
+        $this->httpClient = $httpClient;
+    }
 
     public function importData(): void
     {
@@ -34,8 +46,7 @@ class WikiLargestCompaniesService
 
     private function fetchDataFromWiki(): string
     {
-        $httpClient = HttpClient::create();
-        $response = $httpClient->request('GET', $this->url);
+        $response = $this->httpClient->request('GET', $this->url);
         return $response->getContent();
     }
 

@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Command\LockableTrait;
+use Symfony\Component\HttpClient\HttpClient;
 
 class WikiLargestCompaniesBrazilTask extends Command
 {
@@ -17,7 +18,8 @@ class WikiLargestCompaniesBrazilTask extends Command
     public function __construct(?string $name = null)
     {
         parent::__construct();
-        $this->wikiService = new WikiLargestCompaniesService();
+        $httpClient = HttpClient::create();
+        $this->wikiService = new WikiLargestCompaniesService($httpClient);
     }
 
     protected function configure()
