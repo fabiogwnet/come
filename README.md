@@ -11,7 +11,7 @@ O desafio consiste em criar uma aplicação capaz de buscar dados na [página da
 4. Por se tratar de um teste, deixei as configurações nos arquivos abaixo
     - .env
     - .env.testing
-5. Acessando o container:
+5. Comfigurando proxy Nginx:
     - No terminal, execute o seguinte comando para criar o domínio **www.comexio.com.br* no Nginx:
     ```bash
     vi /opt/homebrew/etc/nginx/servers/0-proxy.conf
