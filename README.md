@@ -155,3 +155,33 @@ Por se tratar de um teste, deixei as dependências baixadas e versionadas
         }
     ]
     ```
+2. Retornar empresas com lucro menor que o valor especificado
+    ```bash
+        curl --location --globoff 'http://www.comexio.com.br/api/company/list?filters[rule]=smaller&filters[billions]=0.2' \
+        --header 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL3dzLmdpdmVyLmNvbS5iciIsImp0aSI6ImM5YTNmN2NmLTczYzEtNGQ3Yi04MTJkLTQ1YTc4NmIwN2M5NyIsImF1ZCI6Imh0dHBzOi8vY2xpLmdpdmVyLmNvbS5iciIsImlhdCI6MTczNjQ1MjU0MC45OTQ5NDYsImV4cCI6MTczNjUzODk0MC45OTQ5NDYsInVpZCI6ImM5YTNmN2NmLTczYzEtNGQ3Yi04MTJkLTQ1YTc4NmIwN2M5NyJ9.ih4nSFYKanWUJWRZuDFM2BlkUhdnYOVP68dC2F1kfFZTWvR-Ct_B5-a_scsKgmM6krp1VY8WA7LtF5PKAUBkGoxxk_rQPbZwnllMLsU1g9qQRQjckIVpPljnRMnr8FYjkc4Yj5Rq0G_tphoHxRonLwSk9quyhvOtO9gUg4R7OKKnSxxsh81mv9-58h1saTJ1kGD0FVKI2UCdJQaJCGOv09YFW5AUQ8fKwSd9VS9Hpp2UMerxjvnEq8-ZR80pw_wNUVndR4KwlUCr5SJBKRo7ErTYo8B0lN0XaihZ-W5VjC4Ov7atXkDj8Z1_MTSKuVtBuDneXJI13cQr4nEyFgMcmw'
+    ```
+    - Será retornado os seguintes dados
+    ```json
+    [
+        {
+            "company_name": "Braskem",
+            "profit": "0.065",
+            "rank": 18
+        }
+    ]
+    ```
+3. Retornar empresas com lucro dentro do intervalo especificado em "range"
+    ```bash
+        curl --location --globoff 'http://www.comexio.com.br/api/company/list?filters[rule]=between&filters[range][]=1&filters[range][]=2' \
+        --header 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL3dzLmdpdmVyLmNvbS5iciIsImp0aSI6ImM5YTNmN2NmLTczYzEtNGQ3Yi04MTJkLTQ1YTc4NmIwN2M5NyIsImF1ZCI6Imh0dHBzOi8vY2xpLmdpdmVyLmNvbS5iciIsImlhdCI6MTczNjQ1MjU0MC45OTQ5NDYsImV4cCI6MTczNjUzODk0MC45OTQ5NDYsInVpZCI6ImM5YTNmN2NmLTczYzEtNGQ3Yi04MTJkLTQ1YTc4NmIwN2M5NyJ9.ih4nSFYKanWUJWRZuDFM2BlkUhdnYOVP68dC2F1kfFZTWvR-Ct_B5-a_scsKgmM6krp1VY8WA7LtF5PKAUBkGoxxk_rQPbZwnllMLsU1g9qQRQjckIVpPljnRMnr8FYjkc4Yj5Rq0G_tphoHxRonLwSk9quyhvOtO9gUg4R7OKKnSxxsh81mv9-58h1saTJ1kGD0FVKI2UCdJQaJCGOv09YFW5AUQ8fKwSd9VS9Hpp2UMerxjvnEq8-ZR80pw_wNUVndR4KwlUCr5SJBKRo7ErTYo8B0lN0XaihZ-W5VjC4Ov7atXkDj8Z1_MTSKuVtBuDneXJI13cQr4nEyFgMcmw'
+    ```
+    - Será retornado os seguintes dados
+    ```json
+    [
+        {
+            "company_name": "BTG Pactual",
+            "profit": "1.520",
+            "rank": 6
+        }
+    ]
+    ```
