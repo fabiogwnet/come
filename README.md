@@ -18,16 +18,83 @@ Por se tratar de um teste, deixei as dependências baixadas e versionadas
 
 ## Execução
 1. Acessando o container:
+    - No terminal, execute o seguinte comando para criar o domínio **www.comexio.com.br* no Nginx:
+    ```bash
+    vi /opt/homebrew/etc/nginx/servers/0-proxy.conf
+    ```
+    - Adicione o seginte conteúdo:
+    ```vi
+    upstream @comexio {
+        ip_hash;
+        server 127.0.0.1:8005;
+    }
+
+    server {
+    listen 80;
+    #listen 443 ssl http2;
+    server_name www.comexio.com.br;
+
+    #listen [::]:80 ipv6only=on;
+    #listen [::]:443 ipv6only=on http2;
+
+    ssl_ciphers HIGH:!aNULL:!MD5:!kEDH;
+    ssl_prefer_server_ciphers on;
+    ssl_session_cache shared:SSL:512m;
+    ssl_session_timeout 0;
+
+    location / {
+        proxy_pass http://@comexio;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-HTTPS-Protocol $ssl_protocol;
+        proxy_set_header Connection "";
+        proxy_buffering off;
+
+        client_max_body_size 250M;
+        keepalive_timeout 300s;
+
+        fastcgi_buffers 8 1600k;
+        fastcgi_buffer_size 1600k;
+        fastcgi_busy_buffers_size 1600k;
+        fastcgi_temp_file_write_size 1600k;
+        fastcgi_connect_timeout 24h;
+        fastcgi_send_timeout 24h;
+        fastcgi_read_timeout 24h;
+
+        proxy_connect_timeout 24h;
+        proxy_read_timeout 24h;
+        proxy_send_timeout 24h;
+        send_timeout 24h;
+
+        reset_timedout_connection on;
+    }
+
+    error_log /tmp/error.log;
+    log_not_found off;
+    access_log off;
+    }
+    ```
+    - Edite o hosts:
+    ```bash
+    vi /etc/hosts
+    ```
+    - Adicione a seguinte linha no arquivo /etc/hosts:
+    ```vi
+    127.0.0.1 www.comexio.com.br
+    ```
+2. Acessando o container:
     - No terminal, execute o seguinte comando para entrar no container:
     ```bash
     docker exec -it comexio_php bash
     ```
-2. Executando a task:
+3. Executando a task:
     - Dentro do container **comexio_php**, execute o comando abaixo para buscar dados na [página da Wikipédia](https://pt.wikipedia.org/wiki/Lista_das_maiores_empresas_do_Brasil) e popular as tabelas correspondentes:
     ```bash
     php tasker wiki:import-largest-companies-brazil
     ```
-3. Automatização:
+4. Automatização:
     - Para garantir a execução periódica da task, configure uma cron job para ser executada diariamente ou semanalmente, conforme a necessidade.
 
 ## GrumPHP
