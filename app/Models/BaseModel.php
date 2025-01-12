@@ -47,4 +47,12 @@ class BaseModel extends Model
 
         return $deleted;
     }
+
+    public function scopeDebugSql($model): string
+    {
+        $query = str_replace(['%', '?'], ['%%', '\'%s\''], $model->toSql());
+        $query = vsprintf($query, $model->getBindings());
+
+        return $query;
+    }
 }
