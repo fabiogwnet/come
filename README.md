@@ -11,13 +11,7 @@ O desafio consiste em criar uma aplicação capaz de buscar dados na [página da
 4. Por se tratar de um teste, deixei as configurações nos arquivos abaixo
     - .env
     - .env.testing
-
-## Dependências
-
-Por se tratar de um teste, deixei as dependências baixadas e versionadas
-
-## Execução
-1. Acessando o container:
+5. Acessando o container:
     - No terminal, execute o seguinte comando para criar o domínio **www.comexio.com.br* no Nginx:
     ```bash
     vi /opt/homebrew/etc/nginx/servers/0-proxy.conf
@@ -84,17 +78,23 @@ Por se tratar de um teste, deixei as dependências baixadas e versionadas
     ```vi
     127.0.0.1 www.comexio.com.br
     ```
-2. Acessando o container:
+
+## Dependências
+
+Por se tratar de um teste, deixei as dependências baixadas e versionadas
+
+## Execução
+1. Acessando o container:
     - No terminal, execute o seguinte comando para entrar no container:
     ```bash
     docker exec -it comexio_php bash
     ```
-3. Executando a task:
+2. Executando a task:
     - Dentro do container **comexio_php**, execute o comando abaixo para buscar dados na [página da Wikipédia](https://pt.wikipedia.org/wiki/Lista_das_maiores_empresas_do_Brasil) e popular as tabelas correspondentes:
     ```bash
     php tasker wiki:import-largest-companies-brazil
     ```
-4. Automatização:
+3. Automatização:
     - Para garantir a execução periódica da task, configure uma cron job para ser executada diariamente ou semanalmente, conforme a necessidade.
 
 ## GrumPHP
