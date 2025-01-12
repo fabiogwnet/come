@@ -50,3 +50,108 @@ Por se tratar de um teste, deixei as dependências baixadas e versionadas
         curl --location --globoff 'http://www.comexio.com.br/api/company/list?filters[rule]=greater&filters[billions]=0.2' \
         --header 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL3dzLmdpdmVyLmNvbS5iciIsImp0aSI6ImM5YTNmN2NmLTczYzEtNGQ3Yi04MTJkLTQ1YTc4NmIwN2M5NyIsImF1ZCI6Imh0dHBzOi8vY2xpLmdpdmVyLmNvbS5iciIsImlhdCI6MTczNjQ1MjU0MC45OTQ5NDYsImV4cCI6MTczNjUzODk0MC45OTQ5NDYsInVpZCI6ImM5YTNmN2NmLTczYzEtNGQ3Yi04MTJkLTQ1YTc4NmIwN2M5NyJ9.ih4nSFYKanWUJWRZuDFM2BlkUhdnYOVP68dC2F1kfFZTWvR-Ct_B5-a_scsKgmM6krp1VY8WA7LtF5PKAUBkGoxxk_rQPbZwnllMLsU1g9qQRQjckIVpPljnRMnr8FYjkc4Yj5Rq0G_tphoHxRonLwSk9quyhvOtO9gUg4R7OKKnSxxsh81mv9-58h1saTJ1kGD0FVKI2UCdJQaJCGOv09YFW5AUQ8fKwSd9VS9Hpp2UMerxjvnEq8-ZR80pw_wNUVndR4KwlUCr5SJBKRo7ErTYo8B0lN0XaihZ-W5VjC4Ov7atXkDj8Z1_MTSKuVtBuDneXJI13cQr4nEyFgMcmw'
     ```
+    - Será retornado os seguintes dados
+    ```json
+    [
+        {
+            "company_name": "Petrobras",
+            "profit": "36.470",
+            "rank": 1
+        },
+        {
+            "company_name": "Itaú Unibanco",
+            "profit": "5.750",
+            "rank": 2
+        },
+        {
+            "company_name": "Vale",
+            "profit": "15.980",
+            "rank": 3
+        },
+        {
+            "company_name": "Banco do Brasil",
+            "profit": "5.760",
+            "rank": 4
+        },
+        {
+            "company_name": "Bradesco",
+            "profit": "3.490",
+            "rank": 5
+        },
+        {
+            "company_name": "BTG Pactual",
+            "profit": "1.520",
+            "rank": 6
+        },
+        {
+            "company_name": "JBS",
+            "profit": "2.990",
+            "rank": 7
+        },
+        {
+            "company_name": "Suzano",
+            "profit": "3.550",
+            "rank": 8
+        },
+        {
+            "company_name": "Eletrobras",
+            "profit": "0.705",
+            "rank": 9
+        },
+        {
+            "company_name": "Gerdau",
+            "profit": "2.270",
+            "rank": 10
+        },
+        {
+            "company_name": "Marfrig",
+            "profit": "0.804",
+            "rank": 11
+        },
+        {
+            "company_name": "Itaúsa",
+            "profit": "2.650",
+            "rank": 12
+        },
+        {
+            "company_name": "WEG",
+            "profit": "0.886",
+            "rank": 13
+        },
+        {
+            "company_name": "Raízen",
+            "profit": "18.700",
+            "rank": 14
+        },
+        {
+            "company_name": "Metalúrgica Gerdau",
+            "profit": "0.751",
+            "rank": 15
+        },
+        {
+            "company_name": "B3",
+            "profit": "0.818",
+            "rank": 16
+        },
+        {
+            "company_name": "Vibra Energia",
+            "profit": "0.297",
+            "rank": 17
+        },
+        {
+            "company_name": "CPFL Energia",
+            "profit": "0.987",
+            "rank": 19
+        },
+        {
+            "company_name": "Grupo Ultra",
+            "profit": "0.312",
+            "rank": 20
+        },
+        {
+            "company_name": "Cosan",
+            "profit": "0.228",
+            "rank": 21
+        }
+    ]
+    ```
