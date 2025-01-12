@@ -255,8 +255,18 @@ Por se tratar de um teste, deixei as dependências baixadas e versionadas
 ## Prints
 1. Executando task no container **comexio_php** para buscar dados na [página da Wikipédia](https://pt.wikipedia.org/wiki/Lista_das_maiores_empresas_do_Brasil) e popular as tabelas correspondentes
 
-![Img1](storage/doc_file/1.jpeg)
+    - ![Img1](storage/doc_file/1.jpeg)
 
 2. Executando commit com validação **GrumPHP**
 
-![Img1](storage/doc_file/2.jpeg)
+    - ![Img1](storage/doc_file/2.jpeg)
+
+2. Exemplos de uso
+
+    - ![Img1](storage/doc_file/3.jpeg)
+    - ![Img1](storage/doc_file/4.jpeg)
+    - ![Img1](storage/doc_file/5.jpeg)
+    - ![Img1](storage/doc_file/6.jpeg)
+    - ![Img1](storage/doc_file/7.jpeg)
+    - ![Img1](storage/doc_file/8.jpeg)
+    - ![Img1](storage/doc_file/9.jpeg)
