@@ -256,3 +256,7 @@ Por se tratar de um teste, deixei as dependências baixadas e versionadas
 1. Executando task no container **comexio_php** para buscar dados na [página da Wikipédia](https://pt.wikipedia.org/wiki/Lista_das_maiores_empresas_do_Brasil) e popular as tabelas correspondentes
 
 ![Img1](storage/doc_file/1.jpeg)
+
+2. Executando commit com validação **GrumPHP**
+
+![Img1](storage/doc_file/2.jpeg)
