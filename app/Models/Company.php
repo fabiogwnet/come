@@ -19,7 +19,7 @@ class Company extends BaseModel
         }
 
         $query->orderBy('company.rank', 'ASC');
-        $data = $query->get();
+        $data = $query->makeCache("Company")->get();
 
         return $data->isEmpty() ? [] : $data->toArray();
     }
@@ -38,7 +38,6 @@ class Company extends BaseModel
     {
         if (!empty($filters['rule']) && in_array($filters['rule'], ['greater', 'smaller', 'between'])) {
             if (in_array($filters['rule'], ['greater', 'smaller']) && isset($filters['billions']) && is_numeric($filters['billions'])) {
-
                 if (is_numeric($filters['billions'])) {
                     $condition = $filters['rule'] === 'greater' ? '>' : '<';
                     $query->where('company.profit', $condition, $filters['billions']);

@@ -32,9 +32,9 @@ class CacheBuilder extends Builder
         return $this->remember($seconds, $key);
     }
 
-    public function makeCache(int $brandId, $key = null, $seconds = 86400): self
+    public function makeCache($key = null, $seconds = 86400): self
     {
-        $key = "-" . $brandId . "-" . $key . "-";
+        $key = "-" . $key . "-";
         return $this->remember($seconds, $key);
     }
 
