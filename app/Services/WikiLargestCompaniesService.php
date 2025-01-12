@@ -13,7 +13,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 class WikiLargestCompaniesService
 {
     protected HttpClientInterface $httpClient;
-    protected string $url = 'https://pt.wikipedia.org/wiki/Lista_das_maiores_empresas_do_Brasil';
+    const WIKI_URL = 'https://pt.wikipedia.org/wiki/Lista_das_maiores_empresas_do_Brasil';
 
     public function __construct(HttpClientInterface $httpClient)
     {
@@ -46,7 +46,7 @@ class WikiLargestCompaniesService
 
     private function fetchDataFromWiki(): string
     {
-        $response = $this->httpClient->request('GET', $this->url);
+        $response = $this->httpClient->request('GET', self::WIKI_URL);
         return $response->getContent();
     }
 

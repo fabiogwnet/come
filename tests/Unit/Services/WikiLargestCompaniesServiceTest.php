@@ -11,8 +11,6 @@ use Tests\TestCase;
 
 class WikiLargestCompaniesServiceTest extends TestCase
 {
-    private const WIKI_URL = 'https://pt.wikipedia.org/wiki/Lista_das_maiores_empresas_do_Brasil';
-
     /**
      * Sets up a mock for the HttpClient, returning the specified content.
      *
@@ -29,11 +27,11 @@ class WikiLargestCompaniesServiceTest extends TestCase
         // Mock for HTTP client.
         $mockHttpClient = $this->createMock(HttpClientInterface::class);
         $mockHttpClient->method('request')
-            ->with('GET', self::WIKI_URL)
+            ->with('GET', WikiLargestCompaniesService::WIKI_URL)
             ->willReturn($mockResponse);
 
         // Service instance with mocked HTTP client.
-        return new WikiLargestCompaniesService($mockHttpClient, self::WIKI_URL);
+        return new WikiLargestCompaniesService($mockHttpClient, WikiLargestCompaniesService::WIKI_URL);
     }
 
     /**
