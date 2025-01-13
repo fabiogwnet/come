@@ -1,4 +1,4 @@
-# Desafio Backend (Captação)
+# Desafio Backend PHP 8 (Captação)
 
 O desafio consiste em criar uma aplicação capaz de buscar dados na [página da Wikipédia](https://pt.wikipedia.org/wiki/Lista_das_maiores_empresas_do_Brasil) que contém a lista das maiores empresas do Brasil. O objetivo é filtrar as empresas pelo lucro, com base nos parâmetros enviados na requisição.
 
